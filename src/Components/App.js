@@ -1,16 +1,35 @@
 import React from 'react';
-import { ApolloProvider } from 'react-apollo-hooks';
-import { ThemeProvider } from 'styled-components';
+import { gql } from 'apollo-boost';
+import { useQuery } from 'react-apollo-hooks';
+import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from '../Styles/GlobalStyles';
 import Theme from '../Styles/Theme';
-import Client from '../Apollo/Client';
 import Router from './Router';
+import Footer from './Footer';
 
-export default () => (
-    <ThemeProvider theme={Theme}>
-      <ApolloProvider client={Client}>
-        <GlobalStyles />
-        <Router isLoggedIn={false}/>
-      </ApolloProvider>
+const QUERY = gql`
+  {
+    isLoggedIn @client
+  }
+`;
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  max-width: 935px;
+  width: 100%;
+`;
+
+export default () => {
+  const { data: { isLoggedIn } } = useQuery(QUERY);
+  return(
+      <ThemeProvider theme={Theme}>
+      <React.Fragment>
+        <Wrapper>
+          <GlobalStyles />
+          <Router isLoggedIn={isLoggedIn}/>
+          <Footer />
+        </Wrapper>
+      </React.Fragment>
     </ThemeProvider>
-);
+  );
+}
