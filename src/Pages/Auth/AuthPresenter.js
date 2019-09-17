@@ -46,48 +46,56 @@ const Form = styled(Box)`
     }
 `;
 
-export default (
+export default ({
     action,
     setAction,
-    username,
-    password,
+    onSubmit,
+    userName,
+    secret,
     firstName,
     lastName,
     email
-) => (
+}) => (
     <Wrapper>
         <Form>
-            {action === "logIn" ? (
-            <form>
-                <Input placeholder={"Username"} {...username}/>
-                <Input placeholder={"Password"} {...password} type="password"/>
+            {action === "logIn" && (
+            <form onSubmit={onSubmit}>
+                <Input placeholder={"Email"} {...email} type="email"/>
                 <Button text={"Log in"} />
             </form>
-            ) : (
-            <form>
+            )}
+            {action === "signUp" && (
+            <form onSubmit={onSubmit}>
                 <Input placeholder={"First name"} {...firstName}/>
                 <Input placeholder={"Last name"} {...lastName}/>
                 <Input placeholder={"Email"} {...email} type="email"/>
-                <Input placeholder={"Username"} {...username}/>
-                <Input placeholder={"Password"} {...password} type="password"/>
+                <Input placeholder={"Username"} {...userName}/>
                 <Button text={"Sign up"} />
             </form>
             )}
+            {action === "confirm" && (
+            <form onSubmit={onSubmit}>
+                <Input placeholder={"Paste your secret key."} {...secret}/>
+                <Button text={"Confirm"} />
+            </form>
+            )}
         </Form>
-        <StateChanger>
-        {
-            action === 'logIn' ? (
+        {action !== "confirm" && (
+            <StateChanger>
+            {action === 'logIn' && (
                 <React.Fragment>
                     Don't have an account?{" "}
                     <Link onClick={() => setAction("signUp")}>Sign up</Link>
                 </React.Fragment>
-            ) : (
+            )}
+            {action === 'signUp' && (
                 <React.Fragment>
                     Have an account?{" "}
                     <Link onClick={() => setAction("logIn")}>Log in</Link>
                 </React.Fragment>
-            )
-        }
-        </StateChanger>
+            )}
+            </StateChanger>
+        )}
+        
     </Wrapper>
 );
