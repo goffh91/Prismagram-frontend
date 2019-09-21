@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-apollo-hooks';
 import useInput from '../../Hooks/useInput';
 import AuthPresenter from './AuthPresenter';
-import { LOG_IN, CREATE_ACCOUNT, CONFIRM_SECRET } from './AuthQueries';
+import { LOG_IN, CREATE_ACCOUNT, CONFIRM_SECRET, LOCAL_LOG_IN } from './AuthQueries';
 import { toast } from 'react-toastify';
 
 
@@ -33,6 +33,8 @@ export default () => {
             secret: secret.value
         }
     });
+
+    const [ localLogIn ] = useMutation(LOCAL_LOG_IN);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -83,16 +85,23 @@ export default () => {
                         toast.error('Fail to create account, try again.');
                     }
                 } catch(error) {
-                    toast.error((error.message).substring((error.message).indexOf(':') + 1));
-                    //toast.error('Can\'t create account, try again.');
+                    toast.error(
+                        (error.message).substring(
+                            (error.message).indexOf(':') + 1
+                        )
+                    );
                 }
             }
         } else if (action === 'confirm') {
             // Confirm process.
             if (secret.value !== '') {
                 try {
-                    const { data } = await confirmSecret();
-                    console.log(data);
+                    const { data: { confirmSecret:token } } = await confirmSecret();
+                    if (token !== "" && token !== undefined) {
+                        localLogIn({ variables: { token } });
+                    } else {
+                        toast.error('Wrong secret code.');
+                    }
                 } catch {
                     toast.error('Can\'t confirm secret.');
                 }
