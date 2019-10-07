@@ -21,7 +21,7 @@ const QUERY = gql`
 const Wrapper = styled.div`
   width: 100%;
   max-width: ${props => props.theme.maxWidth};
-  margin: 0 auto;
+  margin: 120px auto;
 `;
 
 export default () => {
@@ -29,12 +29,22 @@ export default () => {
   return(
     <ThemeProvider theme={Theme}>
       <HashRouter>
-        <Header />
+        {isLoggedIn && <Header />}
         <Wrapper>
           <GlobalStyles />
           <Routes isLoggedIn={isLoggedIn}/>
           <Footer />
-          <ToastContainer position={toast.POSITION.BOTTOM_LEFT}/>
+          <ToastContainer 
+            position={toast.POSITION.BOTTOM_CENTER}
+            pauseOnVisibilityChange
+            autoClose={2200}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            pauseOnHover
+            rtl={false}
+            draggable
+          />
         </Wrapper>
       </HashRouter>
     </ThemeProvider>

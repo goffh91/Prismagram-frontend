@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from "react-helmet";
 import styled from 'styled-components';
 import Input from '../../Components/Input';
 import Button from '../../Components/Button';
@@ -59,25 +60,66 @@ export default ({
     <Wrapper>
         <Form>
             {action === "logIn" && (
-            <form onSubmit={onSubmit}>
-                <Input placeholder={"Email"} {...email} type="email"/>
-                <Button text={"Log in"} />
-            </form>
+            <React.Fragment>
+                <Helmet>
+                    <title>Log In | Prismagram</title>
+                </Helmet>
+                <form onSubmit={onSubmit}>
+                    <Input 
+                        type="email"
+                        placeholder={"Email"}
+                        value={email.value}
+                        onChange={email.onChange}
+                    />
+                    <Button text={"Log in"} />
+                </form>
+            </React.Fragment>
             )}
             {action === "signUp" && (
-            <form onSubmit={onSubmit}>
-                <Input placeholder={"First name"} {...firstName}/>
-                <Input placeholder={"Last name"} {...lastName}/>
-                <Input placeholder={"Email"} {...email} type="email"/>
-                <Input placeholder={"Username"} {...userName}/>
-                <Button text={"Sign up"} />
-            </form>
+            <React.Fragment>
+                <Helmet>
+                    <title>Sign Up | Prismagram</title>
+                </Helmet>
+                <form onSubmit={onSubmit}>
+                    <Input 
+                        placeholder={"First name"}
+                        value={firstName.value}
+                        onChange={firstName.onChange}
+                    />
+                    <Input 
+                        placeholder={"Last name"}
+                        value={lastName.value}
+                        onChange={lastName.onChange}
+                    />
+                    <Input 
+                        placeholder={"Email"}
+                        value={email.value}
+                        onChange={email.onChange}
+                        type="email"
+                    />
+                    <Input 
+                        placeholder={"Username"}
+                        value={userName.value}
+                        onChange={userName.onChange}
+                    />
+                    <Button text={"Sign up"} />
+                </form>
+            </React.Fragment>
             )}
             {action === "confirm" && (
-            <form onSubmit={onSubmit}>
-                <Input placeholder={"Paste your secret key."} {...secret}/>
-                <Button text={"Confirm"} />
-            </form>
+            <React.Fragment>
+                <Helmet>
+                    <title>Confirm Secret | Prismagram</title>
+                </Helmet>
+                <form onSubmit={onSubmit}>
+                    <Input 
+                        placeholder={"Paste your secret key."}
+                        value={secret.value}
+                        onChange={secret.onChange}
+                    />
+                    <Button text={"Confirm"} />
+                </form>
+            </React.Fragment>
             )}
         </Form>
         {action !== "confirm" && (
