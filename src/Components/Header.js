@@ -1,13 +1,13 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components'
 
 import { useQuery } from 'react-apollo-hooks';
-import { Link, withRouter } from "react-router-dom";
-import { MY_PROFILE } from '../SharedQueries';
+import { Link, withRouter } from 'react-router-dom';
+import { MY_PROFILE } from '../SharedQueries'
 
-import Input from "./Input";
-import useInput from "../Hooks/useInput";
-import { Compass, HeartEmpty, User, Logo } from "./Icons";
+import Input from './Input';
+import useInput from '../Hooks/useInput';
+import { Compass, HeartEmpty, User, Logo } from './Icons';
 
 const Header = styled.header`
   width: 100%;
@@ -66,7 +66,7 @@ const HeaderLink = styled(Link)`
 `;
 
 export default withRouter(({ history }) => {
-  const search = useInput("");
+  const search = useInput('');
   const { data } = useQuery(MY_PROFILE);
   const onSearchSubmit = (e) => {
     e.preventDefault();
@@ -76,32 +76,32 @@ export default withRouter(({ history }) => {
     <Header>
       <HeaderWrapper>
         <HeaderColumn>
-          <Link to="/">
+          <Link to={"/"}>
             <Logo />
           </Link>
         </HeaderColumn>
         <HeaderColumn>
           <form onSubmit={onSearchSubmit}>
             <SearchInput 
-              placeholder="Search"
+              placeholder={"Search"}
               value={search.value}
               onChange={search.onChange}
             />
           </form>
         </HeaderColumn>
         <HeaderColumn>
-          <HeaderLink to="/explore">
+          <HeaderLink to={"/explore"}>
             <Compass />
           </HeaderLink>
-          <HeaderLink to="/notifications">
+          <HeaderLink to={"/notifications"}>
             <HeartEmpty />
           </HeaderLink>
           {data && data.myProfile ? (
             <HeaderLink to={data.myProfile.userName}>
               <User />
-            </HeaderLink> 
+            </HeaderLink>
           ) : (
-            <HeaderLink to="/#">
+            <HeaderLink to={"/#"}>
               <User />
             </HeaderLink>
           )}

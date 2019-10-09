@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import TextAreaAutosize from 'react-autosize-textarea';
 import FatText from '../FatText';
@@ -91,7 +92,7 @@ const TextArea = styled(TextAreaAutosize)`
 `;
 
 const Comments = styled.ul`
-  margin-top: 10px;
+  margin-bottom: 15px;
 `;
 
 const Comment = styled.li`
@@ -101,10 +102,23 @@ const Comment = styled.li`
   }
 `;
 
+const Caption = styled.div`
+  margin-top: 10px;
+  span {
+    margin-right: 5px;
+  }
+`;
+
+const ELink = styled(Link)`
+  color: inherit;
+`;
+
+
 export default ({
   user: { userName, avatar },
   location,
   files,
+  caption,
   comments,
   isLiked,
   likeCount,
@@ -120,7 +134,9 @@ export default ({
       <Header>
         <Avatar size="sm" url={avatar} />
         <UserColumn>
-          <FatText text={userName} />
+          <ELink to={`/${userName}`}>
+            <FatText text={userName} />
+          </ELink>
           <Location>{location}</Location>
         </UserColumn>
       </Header>
@@ -141,11 +157,21 @@ export default ({
           <Button><CommentIcon /></Button>
         </Buttons>
         <FatText text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
+        <Caption>
+          <ELink to={`/${userName}`}>
+            <FatText text={userName} />
+          </ELink>
+          {caption}
+          <Timestamp>{createdAt}</Timestamp>
+        </Caption>
+        
         {comments && (
           <Comments>
             {comments.map(comment => (
               <Comment key={comment.id}>
-                <FatText text={comment.user.userName}/>
+                <ELink to={`/${comment.user.userName}`}>
+                  <FatText text={comment.user.userName}/>
+                </ELink>
                 {comment.text}
               </Comment>
             ))}
@@ -157,7 +183,6 @@ export default ({
             ))}
           </Comments>
         )}
-        <Timestamp>{createdAt}</Timestamp>
         <TextArea 
           placeholder={"Add a comment..."}
           value={newComment.value}

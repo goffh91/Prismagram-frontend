@@ -12,7 +12,8 @@ import Routes from './Routes';
 import Header from './Header';
 import Footer from './Footer';
 
-const QUERY = gql`
+
+const LOGIN_QUERY = gql`
   {
     isLoggedIn @client
   }
@@ -21,11 +22,12 @@ const QUERY = gql`
 const Wrapper = styled.div`
   width: 100%;
   max-width: ${props => props.theme.maxWidth};
-  margin: 120px auto;
+  margin: 0 auto;
 `;
 
+
 export default () => {
-  const { data: { isLoggedIn } } = useQuery(QUERY);
+  const { data: { isLoggedIn } } = useQuery(LOGIN_QUERY);
   return(
     <ThemeProvider theme={Theme}>
       <HashRouter>
