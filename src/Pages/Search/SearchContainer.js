@@ -4,6 +4,7 @@ import { useQuery } from 'react-apollo-hooks';
 import SearchPresenter from './SearchPresenter';
 import { SEARCH } from './SearchQueries';
 
+
 export default withRouter(({ location: { search } }) => {
   const searchTerm = search.split('=')[1];
   const { data:searchResult, loading } = useQuery(SEARCH, {
@@ -12,6 +13,7 @@ export default withRouter(({ location: { search } }) => {
       term: searchTerm
     }
   });
+  
   return (
     <SearchPresenter 
       loading={loading}
