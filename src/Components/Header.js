@@ -77,7 +77,14 @@ export default withRouter(({ history }) => {
       <HeaderWrapper>
         <HeaderColumn>
           <Link to={"/"}>
-            <Logo />
+            <span style={{
+              color: '#000',
+              fontSize: '1.25em',
+              letterSpacing: '1.2px',
+              fontWeight: 600
+            }}>
+              <Logo /> &nbsp;|&nbsp; Prismagram
+            </span>
           </Link>
         </HeaderColumn>
         <HeaderColumn>

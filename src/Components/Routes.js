@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Auth from '../Pages/Auth';
 import Feed from '../Pages/Feed';
@@ -12,17 +12,19 @@ import Profile from '../Pages/Profile';
 
 const LoggedInRoutes = () => (
     <Switch>
-        <Route exact path="/" component={Feed}/>
-        <Route exact path="/search" component={Search}/>
-        <Route exact path="/explore" component={Explore}/>
-        <Route exact path="/notifications" component={Notifications}/>
-        <Route exact path="/:username" component={Profile}/>
+        <Route exact path={"/"} component={Feed}/>
+        <Route exact path={"/search"} component={Search}/>
+        <Route exact path={"/explore"} component={Explore}/>
+        <Route exact path={"/notifications"} component={Notifications}/>
+        <Route exact path={"/:username"} component={Profile}/>
+        <Redirect from={"*"} to={"/"}/>
     </Switch>
 );
 
 const LoggedOutRoutes = () => (
     <Switch>
         <Route exat path="/" component={Auth}/>
+        <Redirect from={"*"} to={"/"}/>
     </Switch>
 );
 
