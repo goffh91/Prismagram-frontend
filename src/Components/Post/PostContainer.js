@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import useInput from '../../Hooks/useInput';
 import PostPresenter from './PostPresenter';
@@ -19,17 +19,7 @@ const PostContainer = ({
 }) => {
     const [ isLikedS, setIsLiked ] = useState(isLiked);
     const [ likeCountS, setLikeCount ] = useState(likeCount);
-    const [ currentItem, setCurrentItem ] = useState(0);
     const [ addComments, setAddComments ] = useState([]);
-    
-    useEffect(() => {
-      const totalFiles = files.length;
-      if (currentItem === totalFiles - 1) {
-          setTimeout(() => setCurrentItem(0), 2500);
-      } else {
-          setTimeout(() => setCurrentItem(currentItem + 1), 2500);
-      }
-    }, [ currentItem, files ]);
 
     const [ toggleLike ] = useMutation(TOGGLE_LIKE, {
         variables: { postId: id }
@@ -83,13 +73,13 @@ const PostContainer = ({
             setLikeCount={setLikeCount}
             caption={caption}
             location={location}
-            currentItem={currentItem}
             handleToggleLike={handleToggleLike}
             handleKeyPress={handleKeyPress}
             addComments={addComments}
         />
     );
 }
+
 
 PostContainer.propTypes = {
     id: PropTypes.string.isRequired,
@@ -137,8 +127,7 @@ PostContainer.propTypes = {
     setLikeCount: PropTypes.number,
     handleToggleLike: PropTypes.func,
     handleKeyPress: PropTypes.func,
-    setIsLiked: PropTypes.bool,
-    currentItem: PropTypes.number
+    setIsLiked: PropTypes.bool
 };
 
 
